@@ -27,20 +27,20 @@ export const Navbar: React.FC = () => {
                                         <img className="w-10 h-10 rounded-full relative" src={user.image} alt="user" />
                                     </picture>
 
-                                    <div className="font-medium dark:text-white">
+                                    <div className="font-medium">
                                         <div>{user.name}</div>
-                                        <div className="text-sm text-gray-500 dark:text-gray-400">{user.username}</div>
+                                        <div className="text-sm text-gray-500 ">{user.username}</div>
                                     </div>
                                 </div>
                                 <div className='h-6 w-0.5 bg-black' />
-                                <div className="text-sm font-bold text-black cursor-pointer dark:text-gray-400" onClick={() => signOut()}>Sair</div>
+                                <div className="text-sm font-bold text-black cursor-pointer " onClick={() => signOut()}>Sair</div>
 
                             </div> : <div className="flex md:order-2">
                                 <button onClick={() => signIn('github')} type="button" className="text-white bg-black  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign In</button>
                             </div>}
                     </div> :
                         <div role="status" className="max-w-sm animate-pulse">
-                            <div className="h-10 bg-gray-200 rounded-lg dark:bg-gray-700 w-48"></div>
+                            <div className="h-10 bg-gray-200 rounded-lg  w-48"></div>
                         </div>
                     }
                 </div>
