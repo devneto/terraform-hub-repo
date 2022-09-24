@@ -1,12 +1,12 @@
-import { useSession,signIn,signOut } from 'next-auth/react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React,{ useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 export const Navbar: React.FC = () => {
-    const { data: session,status } = useSession()
+    const { data: session, status } = useSession()
 
-    const user = useMemo(() => session?.user as { name: string,image: string,username: string },[session])
+    const user = useMemo(() => session?.user as { name: string, image: string, username: string }, [session])
 
     return (
         <div>
@@ -22,10 +22,11 @@ export const Navbar: React.FC = () => {
                         {session?.user ?
                             <div className='flex items-center gap-6'>
                                 <div className="flex cursor-pointer items-center space-x-4" data-popover-target="popover-click" data-popover-trigger="click">
-                                    <div className="w-10 h-10 rounded-full relative">
-                                        <Image  src={user.image}  alt="user"layout="fill" objectFit="cover" />
-                                    </div>
-                                    
+                                    <picture>
+                                        <source src={user.image} type="image/webp" />
+                                        <img className="w-10 h-10 rounded-full relative" src={user.image} alt="user" />
+                                    </picture>
+
                                     <div className="font-medium dark:text-white">
                                         <div>{user.name}</div>
                                         <div className="text-sm text-gray-500 dark:text-gray-400">{user.username}</div>
