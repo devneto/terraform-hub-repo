@@ -1,4 +1,6 @@
 import { useSession,signIn,signOut } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
 import React,{ useMemo } from 'react'
 
 export const Navbar: React.FC = () => {
@@ -11,16 +13,16 @@ export const Navbar: React.FC = () => {
             <div className='bg-black w-full h-12 flex items-center justify-center'>
                 <span className='text-white'>Be part of the community 🥳</span>
             </div>
-            <nav className="bg-white border-2 border-gray-100 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+            <nav className="bg-white border-2 border-gray-100 px-2 sm:px-4 py-2.5 rounded">
                 <div className="container flex flex-wrap justify-between items-center mx-auto">
-                    <a href="/" className="flex items-center">
+                    <Link href="/" className="flex items-center">
                         <div><h1 className='text-lg'>Terraform<span className='font-bold'>hub</span></h1></div>
-                    </a>
+                    </Link>
                     {status !== 'loading' ? <div>
                         {session?.user ?
                             <div className='flex items-center gap-6'>
                                 <div className="flex cursor-pointer items-center space-x-4" data-popover-target="popover-click" data-popover-trigger="click">
-                                    <img className="w-10 h-10 rounded-full" src={user.image} alt="" />
+                                    <Image className="w-10 h-10 rounded-full" src={user.image} alt="" />
                                     <div className="font-medium dark:text-white">
                                         <div>{user.name}</div>
                                         <div className="text-sm text-gray-500 dark:text-gray-400">{user.username}</div>
