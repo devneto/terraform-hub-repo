@@ -22,7 +22,7 @@ export const Navbar: React.FC = () => {
                         {session?.user ?
                             <div className='flex items-center gap-6'>
                                 <div className="flex cursor-pointer items-center space-x-4" data-popover-target="popover-click" data-popover-trigger="click">
-                                    <div className="w-10 h-10 rounded-full">
+                                    <div className="w-10 h-10 rounded-full relative">
                                         <Image  src={user.image}  alt="user"layout="fill" objectFit="cover" />
                                     </div>
                                     
