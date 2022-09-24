@@ -1,0 +1,17 @@
+type ListProps = {
+    items: Array<{
+        name: string;
+        slug: string;
+    }>
+}
+
+export const List: React.FC<ListProps> = ({ items }) => {
+    return (
+        <div className="overflow-hidden h-full ">
+            {items.map((item) => (
+                <p key={item.slug} 
+                className="border-b-2 border-gray-100 p-2 cursor-crosshair">{item.name}</p>
+            ))}
+        </div>
+    )
+}
