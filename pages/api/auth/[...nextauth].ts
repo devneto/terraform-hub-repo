@@ -31,6 +31,9 @@ export const authOptions = {
             username: user.username
         }
     })
+  },
+  pages: {
+    signIn: "/api/auth/sigin",
   }
 }
 export default NextAuth(authOptions)
