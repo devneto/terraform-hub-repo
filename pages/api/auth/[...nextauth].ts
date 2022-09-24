@@ -33,7 +33,7 @@ export const authOptions = {
     })
   },
   pages: {
-    signIn: "/api/auth/signin",
+    signIn: "/api/auth/sigin",
   }
 }
 export default NextAuth(authOptions)
