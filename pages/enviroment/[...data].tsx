@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React,{ useEffect,useState } from 'react'
+import { Footer } from '../../components/organisms/footer'
 import { Navbar } from '../../components/organisms/navbar'
 import { findFile } from '../../services/find-file'
 import { getUser } from '../../services/get-user'
@@ -8,8 +9,8 @@ const Enviroment: React.FC = () => {
   const router = useRouter()
   const { data } = router.query
 
-  const [file, setFile] = useState<any>({})
-  const [user, setUser] = useState<any>({})
+  const [file,setFile] = useState<any>({})
+  const [user,setUser] = useState<any>({})
 
 
   const handleFindFile = async () => {
@@ -32,7 +33,7 @@ const Enviroment: React.FC = () => {
       handleFindFile();
       handleGetUser();
     }
-  }, [data]);
+  },[data]);
 
 
 
@@ -69,11 +70,11 @@ const Enviroment: React.FC = () => {
             </div>
             <button className='bg-blue-700 px-6 py-2 rounded-lg text-white'>Favorite</button>
           </div> :
-              <div role="status" className="max-w-sm animate-pulse">
-                <div className="h-4 bg-gray-200 rounded-full  w-full mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded-full w-full mb-2.5"></div>
-              </div>
-            }
+            <div role="status" className="max-w-sm animate-pulse">
+              <div className="h-4 bg-gray-200 rounded-full  w-full mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded-full w-full mb-2.5"></div>
+            </div>
+          }
 
           {file.content ? <textarea id="message" rows={45}
             value={formatContent(file.content)}
@@ -86,6 +87,7 @@ const Enviroment: React.FC = () => {
       </div>
 
     </div>
+    <Footer />
   </>
 }
 
