@@ -37,14 +37,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
   username      String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  environments  Environment[]
 }
 
 model VerificationToken {
@@ -53,4 +54,37 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Environment {
+  id          String                     @id @default(cuid())
+  title       String
+  description String
+  src         String
+  author      User                       @relation(fields: [authorId], references: [id])
+  authorId    String
+  subcategories  SubcategoriesOnEnvironments[]
+}
+
+model Subcategory {
+  id         String   @id @default(cuid())
+  title      String
+  category   Category @relation(fields: [categoryId], references: [id])
+  environments  SubcategoriesOnEnvironments[]
+  categoryId String
+}
+
+model Category {
+  id            String                     @id @default(cuid())
+  title         String
+  subcategories Subcategory[]
+}
+
+model SubcategoriesOnEnvironments {
+  environment   Environment @relation(fields: [environmentId], references: [id])
+  environmentId String
+  subcategory      Subcategory    @relation(fields: [subcategoryId], references: [id])
+  subcategoryId    String
+
+  @@id([environmentId, subcategoryId])
 }
