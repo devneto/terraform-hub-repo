@@ -60,7 +60,7 @@ model Environment {
   id          String                     @id @default(cuid())
   title       String
   description String
-  src         String
+  content         String @db.VarChar(10000)
   author      User                       @relation(fields: [authorId], references: [id])
   authorId    String
   subcategories  SubcategoriesOnEnvironments[]

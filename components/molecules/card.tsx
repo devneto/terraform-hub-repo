@@ -2,14 +2,16 @@ import Link from "next/link"
 import { Badge } from "./badge"
 
 type CardProps = {
+    id: string,
     title: string,
     description: string,
     category: string,
     author: any,
 }
 
-export const Card: React.FC<CardProps> = ({title, description, category, author}) => {
+export const Card: React.FC<CardProps> = ({title, description, category, author, id}) => {
     return (
+        <Link href={`/enviroment/${author.username}/${id}`}>
         <div className="p-6 w-full max-w-sm max-h-[20rem] bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer">
             <div className="flex items-center justify-between mb-4">
                 <h5 className="text-2xl font-bold tracking-tight text-gray-900">{title}</h5>
@@ -31,5 +33,6 @@ export const Card: React.FC<CardProps> = ({title, description, category, author}
             </div>
            
         </div>
+        </Link>
     )
 }

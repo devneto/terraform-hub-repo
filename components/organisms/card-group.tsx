@@ -20,7 +20,7 @@ export const CardGroup: React.FC = () => {
         <div className="p-3 w-full flex gap-10">
             {
                 files.length > 0 ? files.map(({ title, description, id, subcategories, author }) => (
-                    <Card key={id} title={title} description={description} category={subcategories[0].subcategory.category.title} author={author} />
+                    <Card id={id} key={id} title={title} description={description} category={subcategories[0].subcategory.category.title} author={author} />
                 )) :
                     <>
                         {Array.from(Array(3).keys()).map((skeleton => (
