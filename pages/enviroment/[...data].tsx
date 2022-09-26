@@ -109,7 +109,7 @@ const Enviroment: React.FC = () => {
               <p className='text-2xl font-bold'>{file.title}</p>
               <p className='text-lg'>{file.description}</p>
             </div>
-            <button className='bg-blue-700 px-6 py-2 rounded-lg text-white' onClick={() => handleFavorite()}>{ isFavorite ? 'Unline' : 'Like'}</button>
+            <button className='bg-blue-700 px-6 py-2 rounded-lg text-white' onClick={() => handleFavorite()}>{ isFavorite ? 'Remove' : 'Add'}</button>
           </div> :
             <div role="status" className="max-w-sm animate-pulse">
               <div className="h-4 bg-gray-200 rounded-full  w-full mb-4"></div>
