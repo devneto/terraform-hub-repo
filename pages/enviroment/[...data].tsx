@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import React,{ useCallback, useEffect,useMemo,useState } from 'react'
+import React,{ useCallback,useEffect,useMemo,useState } from 'react'
 import { Footer } from '../../components/organisms/footer'
 import { Navbar } from '../../components/organisms/navbar'
 import { findFile } from '../../services/find-file'
@@ -11,11 +11,11 @@ const Enviroment: React.FC = () => {
   const { data } = router.query
   const { data: session } = useSession()
 
-  const user = useMemo(() => session?.user as { id: string, name: string, image: string, username: string}, [session])
+  const user = useMemo(() => session?.user as { id: string,name: string,image: string,username: string },[session])
 
   const [file,setFile] = useState<any>({})
   const [author,setAuthor] = useState<any>({})
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite,setIsFavorite] = useState(false);
 
   const handleFindFile = async () => {
     const response = await findFile(data[1]);
@@ -34,11 +34,11 @@ const Enviroment: React.FC = () => {
   const checkIsFavorite = useCallback(() => {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || []
     const favoriteIndex = favorites.findIndex((item) => item.enviroment.id === file.id && user.id === item.userId)
-    if(favoriteIndex < 0){
+    if (favoriteIndex < 0) {
       return false;
     }
     return true;
-  }, [user, file])
+  },[user,file])
 
 
 
@@ -50,30 +50,30 @@ const Enviroment: React.FC = () => {
   },[data]);
 
   useEffect(() => {
-    if(file && user){
+    if (file && user) {
       setIsFavorite(checkIsFavorite())
     }
-  }, [file, user])
+  },[file,user])
 
- 
+
 
 
   const handleFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favorites')) || []
     const favoriteIndex = favorites.findIndex((item) => item.enviroment.id === file.id && user.id === item.userId)
 
-    const payload = { 
+    const payload = {
       enviroment: file,
       userId: user.id
     }
 
-    if(favoriteIndex < 0){
+    if (favoriteIndex < 0) {
       favorites.push(payload)
-      localStorage.setItem('favorites', JSON.stringify(favorites))
+      localStorage.setItem('favorites',JSON.stringify(favorites))
       setIsFavorite(true);
-    }else{
-      const newFavorites = favorites.filter(item => item.enviroment.id !== file.id && user.id !== item.userId)
-      localStorage.setItem('favorites', JSON.stringify(newFavorites))
+    } else {
+      const newFavorites = favorites.filter(item => item.enviroment.id !== file.id && user.id === item.userId)
+      localStorage.setItem('favorites',JSON.stringify(newFavorites))
       setIsFavorite(false);
     }
   }
@@ -109,7 +109,7 @@ const Enviroment: React.FC = () => {
               <p className='text-2xl font-bold'>{file.title}</p>
               <p className='text-lg'>{file.description}</p>
             </div>
-            <button className='bg-blue-700 px-6 py-2 rounded-lg text-white' onClick={() => handleFavorite()}>{ isFavorite ? 'Remove' : 'Add'}</button>
+            <button className='bg-blue-700 px-6 py-2 rounded-lg text-white' onClick={() => handleFavorite()}>{isFavorite ? 'Remove' : 'Add'}</button>
           </div> :
             <div role="status" className="max-w-sm animate-pulse">
               <div className="h-4 bg-gray-200 rounded-full  w-full mb-4"></div>
