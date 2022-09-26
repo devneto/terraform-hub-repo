@@ -14,7 +14,7 @@ export const Card: React.FC<CardProps> = ({title, description, category, author,
         <Link href={`/enviroment/${author.username}/${id}`}>
         <div className="p-6 w-full max-w-sm max-h-[20rem] bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer">
             <div className="flex items-center justify-between mb-4">
-                <h5 className="text-2xl font-bold tracking-tight text-gray-900">{title}</h5>
+                <h5 className="text-2xl w-1/2 font-bold tracking-tight text-gray-900">{title}</h5>
                 <Badge text={category} color="bg-black" />
             </div>
             <p className="mb-3 font-normal text-gray-700">{description}</p>

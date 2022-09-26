@@ -21,17 +21,19 @@ export const Navbar: React.FC = () => {
                     {status !== 'loading' ? <div>
                         {session?.user ?
                             <div className='flex items-center gap-6'>
-                                <div className="flex cursor-pointer items-center space-x-4" data-popover-target="popover-click" data-popover-trigger="click">
-                                    <picture>
-                                        <source src={user.image} type="image/webp" />
-                                        <img className="w-10 h-10 rounded-full relative" src={user.image} alt="user" />
-                                    </picture>
+                                <Link href="/profile">
+                                    <div className="flex cursor-pointer items-center space-x-4" data-popover-target="popover-click" data-popover-trigger="click">
+                                        <picture>
+                                            <source src={user.image} type="image/webp" />
+                                            <img className="w-10 h-10 rounded-full relative" src={user.image} alt="user" />
+                                        </picture>
 
-                                    <div className="font-medium">
-                                        <div>{user.name}</div>
-                                        <div className="text-sm text-gray-500 ">{user.username}</div>
+                                        <div className="font-medium">
+                                            <div>{user.name}</div>
+                                            <div className="text-sm text-gray-500 ">{user.username}</div>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                                 <div className='h-6 w-0.5 bg-black' />
                                 <div className="text-sm font-bold text-black cursor-pointer " onClick={() => signOut()}>Sair</div>
 

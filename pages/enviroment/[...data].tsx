@@ -1,5 +1,6 @@
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import React,{ useEffect,useState } from 'react'
+import React,{ useCallback, useEffect,useMemo,useState } from 'react'
 import { Footer } from '../../components/organisms/footer'
 import { Navbar } from '../../components/organisms/navbar'
 import { findFile } from '../../services/find-file'
@@ -8,10 +9,13 @@ import { getUser } from '../../services/get-user'
 const Enviroment: React.FC = () => {
   const router = useRouter()
   const { data } = router.query
+  const { data: session } = useSession()
+
+  const user = useMemo(() => session?.user as { id: string, name: string, image: string, username: string}, [session])
 
   const [file,setFile] = useState<any>({})
-  const [user,setUser] = useState<any>({})
-
+  const [author,setAuthor] = useState<any>({})
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleFindFile = async () => {
     const response = await findFile(data[1]);
@@ -20,12 +24,22 @@ const Enviroment: React.FC = () => {
 
   const handleGetUser = async () => {
     const response = await getUser(data[0]);
-    setUser(response.data);
+    setAuthor(response.data);
   }
 
   const formatContent = (b64: string) => {
     return atob(b64)
   }
+
+  const checkIsFavorite = useCallback(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || []
+    const favoriteIndex = favorites.findIndex((item) => item.enviroment.id === file.id && user.id === item.userId)
+    if(favoriteIndex < 0){
+      return false;
+    }
+    return true;
+  }, [user, file])
+
 
 
   useEffect(() => {
@@ -35,7 +49,34 @@ const Enviroment: React.FC = () => {
     }
   },[data]);
 
+  useEffect(() => {
+    if(file && user){
+      setIsFavorite(checkIsFavorite())
+    }
+  }, [file, user])
 
+ 
+
+
+  const handleFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || []
+    const favoriteIndex = favorites.findIndex((item) => item.enviroment.id === file.id && user.id === item.userId)
+
+    const payload = { 
+      enviroment: file,
+      userId: user.id
+    }
+
+    if(favoriteIndex < 0){
+      favorites.push(payload)
+      localStorage.setItem('favorites', JSON.stringify(favorites))
+      setIsFavorite(true);
+    }else{
+      const newFavorites = favorites.filter(item => item.enviroment.id !== file.id && user.id !== item.userId)
+      localStorage.setItem('favorites', JSON.stringify(newFavorites))
+      setIsFavorite(false);
+    }
+  }
 
 
 
@@ -47,17 +88,17 @@ const Enviroment: React.FC = () => {
         <div className='h-full w-1/6 border-gray-200 pt-6 px-4 flex flex-col items-center gap-3'>
           <div className='w-full flex justify-center'>
             <picture>
-              <source src={user.avatar_url} type="image/webp" />
-              <img className="max-w-[10rem] rounded-full" src={user.avatar_url} alt="user" />
+              <source src={author.avatar_url} type="image/webp" />
+              <img className="max-w-[10rem] rounded-full" src={author.avatar_url} alt="user" />
             </picture>
           </div>
           <div className="leading-5 text-center">
-            <p className='font-bold'>{user.name}</p>
-            <p className='text-sm'>{user.login} | {user.company}</p>
+            <p className='font-bold'>{author.name}</p>
+            <p className='text-sm'>{author.login} | {author.company}</p>
             <hr className='my-3' />
-            <p className='text-sm mt-3'>{user.bio}</p>
+            <p className='text-sm mt-3'>{author.bio}</p>
             <hr className='my-3' />
-            <p className='text-sm mt-3'>{user.location}</p>
+            <p className='text-sm mt-3'>{author.location}</p>
           </div>
 
         </div>
@@ -68,7 +109,7 @@ const Enviroment: React.FC = () => {
               <p className='text-2xl font-bold'>{file.title}</p>
               <p className='text-lg'>{file.description}</p>
             </div>
-            <button className='bg-blue-700 px-6 py-2 rounded-lg text-white'>Favorite</button>
+            <button className='bg-blue-700 px-6 py-2 rounded-lg text-white' onClick={() => handleFavorite()}>{ isFavorite ? 'Unline' : 'Like'}</button>
           </div> :
             <div role="status" className="max-w-sm animate-pulse">
               <div className="h-4 bg-gray-200 rounded-full  w-full mb-4"></div>
