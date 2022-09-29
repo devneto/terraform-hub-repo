@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
             </div>
             <nav className="bg-white border-2 border-gray-100 px-2 sm:px-4 py-2.5 rounded">
                 <div className="container flex flex-wrap justify-between items-center mx-auto">
-                    <Link href="/" className="flex items-center">
+                    <Link href="/" className="flex items-center cursor-pointer">
                         <div><h1 className='text-lg'>Terraform<span className='font-bold'>hub</span></h1></div>
                     </Link>
                     {status !== 'loading' ? <div>
